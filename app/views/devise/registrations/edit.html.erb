@@ -7,11 +7,11 @@
   
   <%= f.input :email %>
 
-  <%= f.input :password, :hint => "leave blank if you don't want to change it"%>
+  <%= f.input :password, :as=>:password , :hint => "leave blank if you don't want to change it"%>
 
-  <%= f.input :password_confirmation %>
+  <%= f.input :password_confirmation, :as=>:password  %>
 
-  <%= f.input :current_password, :hint => "we need your current password to confirm your changes" %>
+  <%= f.input :current_password, :as=>:password , :hint => "we need your current password to confirm your changes" %>
 
 </div>
   <%= f.submit "Update" %>

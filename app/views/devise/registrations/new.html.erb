@@ -7,9 +7,9 @@
   
   <%= f.input :email %>
 
-  <%= f.password :password %>
+  <%= f.input :password, :as=>:password %>
 
-  <%= f.password :password_confirmation %>
+  <%= f.input :password_confirmation, :as=>:password  %>
   </div>
   <%= f.submit "Sign up" %>
 <% end %>
