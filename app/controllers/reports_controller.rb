@@ -28,6 +28,7 @@ class ReportsController < ApplicationController
   # GET /reports/new.json
   def new
     @report = Report.new
+    @report.title = "#{current_user.group.name + '`s'} report for the week of #{DateTime.now.beginning_of_week.inspect}"
 
     respond_to do |format|
       format.html # new.html.erb

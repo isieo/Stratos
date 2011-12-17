@@ -2,7 +2,7 @@
   <%= f.error_notification %>
 
   <div class="inputs">
-    <%= f.input :title, :input_html => {:value => "#{@group.name + '`s' if @group} report for the week of #{DateTime.now.beginning_of_week.inspect}"} %>
+    <%= f.input :title%>
     <%= f.input :notes, :input_html => {:class=>'xxlarge'} %>
   </div>
 
