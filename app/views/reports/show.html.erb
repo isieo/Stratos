@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @report.title %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%= @report.notes %>
+</p>
+
+
+<table>
+  <tr>
+    <th>Task</th>
+    <th>Done By</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @report_items.each do |report_item| %>
+  <tr>
+    <td><%= report_item.title %></td>
+    <td><%= report_item.user.name %></td>
+    <td><%= link_to 'Remove', report_item, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+
+<%= render 'report_items/form' %>
+
+
+
+<%= link_to 'Edit', edit_report_path(@report) %> |
+<%= link_to 'Back', reports_path %>

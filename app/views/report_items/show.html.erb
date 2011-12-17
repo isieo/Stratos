@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @report_item.title %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @report_item.user_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_report_item_path(@report_item) %> |
+<%= link_to 'Back', report_items_path %>

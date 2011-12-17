@@ -1,0 +1,14 @@
+<%= simple_form_for(@report_item , :wrapper => :inline) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="inputs">
+    <%= f.input :title %>
+    <%= f.association :user, :prompt => false%>
+    <%= f.input :kind, :collection=>['This Week','Next Week'], :label=> "For", :prompt => false%>
+    <%= f.input :report_id, :as=> :hidden, :input_html => { :value => @report.id}%>
+  </div>
+
+  <div class="actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
