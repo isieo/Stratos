@@ -1,9 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @report.title %>
-</p>
+<% content_for :page_header do %>
+<h2><%= @report.title %></h2>
+<%end%>
 
 <p>
   <b>Notes:</b>
@@ -11,23 +10,18 @@
 </p>
 
 
-<table>
-  <tr>
-    <th>Task</th>
-    <th>Done By</th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @report_items.each do |report_item| %>
-  <tr>
-    <td><%= report_item.title %></td>
-    <td><%= report_item.user.name %></td>
-    <td><%= link_to 'Remove', report_item, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+<% ['This Week','Next Week'].each do |kind| %>
+  <h3><%=kind%></h3>
+  <ul>
+  <% @report.report_items.all(:conditions=>{:kind => kind}, :order => :user_id).each do |report_item| %>
+      <li>
+        <a class="report_item" data-item_id="<%=report_item.id%>" href="#"><%= report_item.title %> <span class="label"><%= report_item.user.name %></span></a>
+      </li>
+  <% end %>
+  </ul>
 <% end %>
-</table>
 
+<hr />
 
 <%= render 'report_items/form' %>
 
@@ -35,3 +29,32 @@
 
 <%= link_to 'Edit', edit_report_path(@report) %> |
 <%= link_to 'Back', reports_path %>
+
+<div id="editmodal" class="modal hide">
+  <div class="modal-header">
+    <a href="#" class="close">&times;</a>
+    <h3>Edit Task</h3>
+  </div>
+  <div class="modal-body"></div>
+</div>
+
+
+<script>
+$(function(){
+  $('.report_item').click(function(){
+    $('#editmodal').modal('show');
+    $.ajax({url:'/report_items/' + $(this).data('item_id') + '/edit',
+    success: function(data){
+      $('.modal-body').html(data);
+    },
+    async: false});
+  });
+});
+</script>
+
+<style>
+.modal .popover,
+.modal .twipsy {
+z-index: 12000;
+}
+</style>

@@ -3,6 +3,7 @@ class ReportItemsController < ApplicationController
   # GET /report_items/1/edit
   def edit
     @report_item = ReportItem.find(params[:id])
+    render action: "edit" , layout: false 
   end
 
   # POST /report_items
@@ -15,7 +16,7 @@ class ReportItemsController < ApplicationController
         format.html { redirect_to @report_item.report, notice: 'Report item was successfully created.' }
         format.json { render json: @report_item, status: :created, location: @report_item }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to @report_item.report }
         format.json { render json: @report_item.errors, status: :unprocessable_entity }
       end
     end
@@ -31,7 +32,7 @@ class ReportItemsController < ApplicationController
         format.html { redirect_to @report_item.report, notice: 'Report item was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { redirect_to @report_item.report }
         format.json { render json: @report_item.errors, status: :unprocessable_entity }
       end
     end
@@ -44,7 +45,7 @@ class ReportItemsController < ApplicationController
     @report_item.destroy
 
     respond_to do |format|
-      format.html { redirect_to report_items_url }
+      format.html { redirect_to @report_item.report }
       format.json { head :ok }
     end
   end

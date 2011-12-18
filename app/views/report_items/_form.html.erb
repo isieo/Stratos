@@ -2,13 +2,14 @@
   <%= f.error_notification %>
 
   <div class="inputs">
-    <%= f.input :title %>
-    <%= f.association :user, :prompt => false%>
+    <%= f.association :user, :prompt => false , :label => "I am" %>
     <%= f.input :kind, :collection=>['This Week','Next Week'], :label=> "For", :prompt => false%>
-    <%= f.input :report_id, :as=> :hidden, :input_html => { :value => @report.id}%>
+    <%= f.input :title,:input_html => {:class=>'xlarge',:style=>"z-index:12000"}, :label => "One of my task is" %>
+    
   </div>
 
   <div class="actions">
-    <%= f.button :submit %>
+    <%= f.button :submit%>
   </div>
+  <%= f.input :report_id, :as=> :hidden%>
 <% end %>

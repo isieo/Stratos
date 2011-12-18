@@ -18,6 +18,8 @@ class ReportsController < ApplicationController
     @report_items = @report.report_items
     @report_item = ReportItem.new
     @report_item.user = current_user
+    @report_item.report = @report
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @report }
@@ -28,7 +30,7 @@ class ReportsController < ApplicationController
   # GET /reports/new.json
   def new
     @report = Report.new
-    @report.title = "#{current_user.group.name + '`s'} report for the week of #{DateTime.now.beginning_of_week.inspect}"
+    @report.title = "#{current_user.group.name + '`s'} report for the week of #{DateTime.now.beginning_of_week.strftime('%d %B %Y')}"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,10 +46,18 @@ class ReportsController < ApplicationController
   # POST /reports
   # POST /reports.json
   def create
+    @last_report = Report.last
     @report = Report.new(params[:report])
 
     respond_to do |format|
       if @report.save
+        @last_report.report_items.all(:conditions=>{:kind=>"Next Week"}).each do |report_item|
+          new_report_item = report_item.dup
+          new_report_item.kind = "This Week"
+          new_report_item.save
+          @report.report_items << new_report_item
+        end
+
         format.html { redirect_to @report, notice: 'Report was successfully created.' }
         format.json { render json: @report, status: :created, location: @report }
       else
