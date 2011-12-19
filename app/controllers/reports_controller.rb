@@ -56,7 +56,7 @@ class ReportsController < ApplicationController
           new_report_item.kind = "This Week"
           new_report_item.save
           @report.report_items << new_report_item
-        end
+        end if @last_report.report_items
 
         format.html { redirect_to @report, notice: 'Report was successfully created.' }
         format.json { render json: @report, status: :created, location: @report }
