@@ -2,7 +2,7 @@ class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
   def index
-    @reports = Report.all
+    @reports = Report.for_user(current_user).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class ReportsController < ApplicationController
   # GET /reports/1
   # GET /reports/1.json
   def show
-    @report = Report.find(params[:id])
+    @report = Report.for_user(current_user).find(params[:id])
 
     @report_items = @report.report_items
     @report_item = ReportItem.new
@@ -40,13 +40,13 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
-    @report = Report.find(params[:id])
+    @report = Report.for_user(current_user).find(params[:id])
   end
 
   # POST /reports
   # POST /reports.json
   def create
-    @last_report = Report.last
+    @last_report = Report.for_user(current_user).last
     @report = Report.new(params[:report])
 
     respond_to do |format|
@@ -70,7 +70,7 @@ class ReportsController < ApplicationController
   # PUT /reports/1
   # PUT /reports/1.json
   def update
-    @report = Report.find(params[:id])
+    @report = Report.for_user(current_user).find(params[:id])
 
     respond_to do |format|
       if @report.update_attributes(params[:report])
@@ -86,7 +86,7 @@ class ReportsController < ApplicationController
   # DELETE /reports/1
   # DELETE /reports/1.json
   def destroy
-    @report = Report.find(params[:id])
+    @report = Report.for_user(current_user).find(params[:id])
     @report.destroy
 
     respond_to do |format|
