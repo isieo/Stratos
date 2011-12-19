@@ -13,7 +13,7 @@
 <% ['This Week','Next Week'].each do |kind| %>
   <h3><%=kind%></h3>
   <ul>
-  <% @report.report_items.all(:conditions=>{:kind => kind}, :order => :user_id).each do |report_item| %>
+  <% @report.for_user(current_user).report_items.all(:conditions=>{:kind => kind}, :order => :user_id).each do |report_item| %>
       <li>
         <a class="report_item" data-item_id="<%=report_item.id%>" href="#"><%= report_item.title %> <span class="label"><%= report_item.user.name %></span></a>
       </li>
