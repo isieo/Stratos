@@ -48,7 +48,8 @@ class ReportsController < ApplicationController
   def create
     @last_report = Report.for_user(current_user).last
     @report = Report.new(params[:report])
-
+    @report.group = current_user.group
+    
     respond_to do |format|
       if @report.save
         @last_report.report_items.all(:conditions=>{:kind=>"Next Week"}).each do |report_item|
